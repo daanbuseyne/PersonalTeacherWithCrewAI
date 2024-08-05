@@ -1,0 +1,7 @@
+crewai
+ollama
+langchain_community
+decouple
+crewai_tools
+langchain
+wikipedia
