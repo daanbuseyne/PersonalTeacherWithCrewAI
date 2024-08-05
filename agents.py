@@ -8,10 +8,14 @@ from langchain_community.utilities import WikipediaAPIWrapper
 
 
 
-pdftool = PDFSearchTool("1406.2661v1.pdf",
+
+# 2 Tools we will use PDFRAG and WIKI
+
+#Since i want to run this code locally on my macbook I choose the phi3 model and allminilm
+pdftool = PDFSearchTool("1406.2661v1.pdf", #name of pdf (studymaterial) you want to upload
             config=dict(
                 llm=dict(
-                    provider="ollama",  # or google, openai, anthropic, llama2, ...
+                    provider="ollama",  
                     config=dict(
                         model="phi3",
                         temperature=0.0,
@@ -20,7 +24,7 @@ pdftool = PDFSearchTool("1406.2661v1.pdf",
                     ),
                 ),
                 embedder=dict(
-                    provider="ollama",  # or openai, ollama, ...
+                    provider="ollama",  
                     config=dict(
                         model="all-minilm",
                         #task_type="retrieval_document",
@@ -29,6 +33,9 @@ pdftool = PDFSearchTool("1406.2661v1.pdf",
                 ),
             )
         )
+
+
+#Wikitool
 wiki = WikipediaAPIWrapper()
 
 wiki_tool = Tool(
@@ -46,10 +53,6 @@ class CustomAgents:
         self.Phi3 = Ollama(model = 'phi3')
 
     def pdf_agent(self):
-        #pdf_tool = PDFSearchTool("how-emotions-are-made-the-secret-life-of-the-brain.pdf")
-
-
-
         return Agent(
             role="Senior PDF Analyst",
             backstory=dedent(f"""You can find anything in a pdf.  The people need you."""),
